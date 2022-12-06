@@ -1,6 +1,9 @@
 from http.client import responses as http_responses
 import json
+import os
 from wsgiref.headers import Headers
+
+from packages.setting import _TEMPLATE_DIRS
 
 
 class Response:
@@ -58,12 +61,22 @@ def read_html(path, encoding="utf-8"):
     return html
 
 
+def fetch_template_path(filename):
+    for template_dir in _TEMPLATE_DIRS:
+        if os.path.exists(os.path.join(template_dir, filename)):
+            return os.path.join(template_dir, filename)
+        else:
+            continue
+
+    return None
+
+
 class HTMLResponse(Response):
-    def __init__(self, filepath, status=200, headers=None, charset='utf-8'):
-        self.filepath = filepath
+    def __init__(self, filename, status=200, headers=None, charset='utf-8'):
+        self.filename = filename
         super().__init__(body='', status=status, headers=headers, charset=charset)
 
     @property
     def body(self):
-        html = read_html(self.filepath)
+        html = read_html(self.filename)
         return [html.encode()]
