@@ -8,7 +8,7 @@ If you want to add routing, you edit `url_patterns` in `urls.py`. For instance, 
 ```python
 url_patterns = [
     ...,
-    ["GET", "/user", user]
+    url("GET", "/user", user)
 ]
 ```
 where `user` is a function defined as:
