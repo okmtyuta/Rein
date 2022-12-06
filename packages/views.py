@@ -1,6 +1,6 @@
 # ここにはview関数を実装のこと
 
-from response import Response, JSONResponse
+from response import Response, JSONResponse, HTMLResponse
 
 
 def index(request):
@@ -16,11 +16,14 @@ def okmtyuta(request):
 
 
 def hello(request):
-    print(request.body.decode("utf-8"))
     return Response("User is created")
 
 
 def user_detail(request, name):
     print(name)
-    body = "こんにちは {name}".format(name=name)
+    body = f"こんにちは {name}さん。ご用件をお伺いいたします。"
     return Response(body.encode("utf-8"))
+
+
+def html(request):
+    return HTMLResponse("/Users/okamotoyouta/Desktop/Productions/Rein/packages/test.html")

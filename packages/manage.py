@@ -15,7 +15,7 @@ def main(args):
                 url_pattern["method"], url_pattern["path"], url_pattern["callback"]
             )
 
-        httpd = make_server("", args.port, app)
+        httpd = make_server("", int(args.port), app)
 
         print(f"Server started on http://localhost:{args.port}")
         httpd.serve_forever()

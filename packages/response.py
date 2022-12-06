@@ -46,3 +46,24 @@ class JSONResponse(Response):
     @property
     def body(self):
         return [json.dumps(self.dic, **self.json_dump_args, ensure_ascii=False).encode(self.charset)]
+
+
+def read_html(path, encoding="utf-8"):
+    try:
+        with open(path, encoding=encoding) as f:
+            html = f.read()
+    except:
+        html = ""
+
+    return html
+
+
+class HTMLResponse(Response):
+    def __init__(self, filepath, status=200, headers=None, charset='utf-8'):
+        self.filepath = filepath
+        super().__init__(body='', status=status, headers=headers, charset=charset)
+
+    @property
+    def body(self):
+        html = read_html(self.filepath)
+        return [html.encode()]
