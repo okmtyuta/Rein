@@ -11,13 +11,14 @@ def main(args):
         app = App()
 
         for url_pattern in url_patterns:
-            app.router.add(url_pattern["method"], url_pattern["path"], url_pattern["callback"])
+            app.router.add(
+                url_pattern["method"], url_pattern["path"], url_pattern["callback"]
+            )
 
         httpd = make_server("", 8000, app)
 
         print(f"Server started on http://localhost:{args.port}")
         httpd.serve_forever()
-
 
     else:
         print("YOU CAN SELECT ONLY RUNSERVER")

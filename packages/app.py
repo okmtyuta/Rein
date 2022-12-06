@@ -1,33 +1,24 @@
-from http.client import responses as http_responses
-from wsgiref.headers import Headers
+# アプリ作成クラス
 
-class Response:
-    default_status = 200
-    default_charset = 'utf-8'
-    default_content_type = 'text/html; charset=UTF-8'
+from request import Request
+from router import Router
 
-    def __init__(self, body='', status=None, headers=None, charset=None):
-        self._body = body
-        self.status = status or self.default_status
-        self.headers = Headers()
-        self.charset = charset or self.default_charset
 
-        if headers:
-            for name, value in headers.items():
-                self.headers.add_header(name, value)
+class App:
+    def __init__(self):
+        self.router = Router()
 
-    @property
-    def status_code(self):
-        return "%d %s" % (self.status, http_responses[self.status])
+    def route(self, path=None, method="GET", callback=None):
+        def decorator(callback_func):
+            self.router.add(method, path, callback_func)
+            return callback_func
 
-    @property
-    def header_list(self):
-        if 'Content-Type' not in self.headers:
-            self.headers.add_header('Content-Type', self.default_content_type)
-        return self.headers.items()
+        return decorator(callback) if callback else decorator
 
-    @property
-    def body(self):
-        if isinstance(self._body, str):
-            return [self._body.encode(self.charset)]
-        return [self._body]
+    def __call__(self, env, start_response):
+        request = Request(env)
+        callback, url_vars = self.router.match(request.method, request.path)
+
+        response = callback(request, **url_vars)
+        start_response(response.status_code, response.header_list)
+        return response.body
