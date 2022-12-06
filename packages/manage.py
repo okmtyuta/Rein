@@ -7,9 +7,9 @@ from urls import url_patterns
 
 
 def to_wsgi_callback(view_function):
-    def callback(request, start_response):
+    def callback(request, start_response, **kwargs):
         start_response("200 OK", [("Content-type", "text/plain; charset=utf-8")])
-        return view_function(request)
+        return view_function(request, **kwargs)
     
     return callback
 

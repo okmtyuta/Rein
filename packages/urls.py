@@ -1,6 +1,6 @@
 # ここにはurlパターンを実装のこと
 
-from views import okmtyuta, index
+from views import okmtyuta, index, hello, user_detail
 
 def url(method, path, callback):
     return {
@@ -11,5 +11,7 @@ def url(method, path, callback):
 
 url_patterns = [
     url("GET", "^/$", index),
-    url("GET", "^/okmtyuta$", okmtyuta)
+    url("GET", "^/okmtyuta$", okmtyuta),
+    url("POST", "^/user$", hello),
+    url("GET", "^/user/(?P<name>\w+)$", user_detail),
 ]
