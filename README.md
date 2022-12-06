@@ -13,5 +13,8 @@ def application(env, start_response):
 ## Sample apps
 To be prepared...
 
+## Future
+完成目標はfuture.mdを参照のこと。
+
 ## References
 [Webアプリケーションフレームワークの作り方 in Python](https://c-bata.link/webframework-in-python/)
