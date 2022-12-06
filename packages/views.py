@@ -26,4 +26,4 @@ def user_detail(request, name):
 
 
 def html(request):
-    return HTMLResponse("/Users/okamotoyouta/Desktop/Productions/Rein/packages/test.html")
+    return HTMLResponse("test.html")

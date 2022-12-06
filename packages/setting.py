@@ -1,1 +1,1 @@
-_TEMPLATE_DIRS = []
+_TEMPLATE_DIRS = ["/Users/okamotoyouta/Desktop/Productions/Rein/packages/template"]
