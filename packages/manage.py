@@ -2,13 +2,14 @@ import argparse
 from wsgiref.simple_server import make_server
 
 from app import App
+from views import okmtyuta
 from urls import url_patterns
 
 
-def to_view(view_function):
+def to_wsgi_callback(view_function):
     def callback(request, start_response):
         start_response("200 OK", [("Content-type", "text/plain; charset=utf-8")])
-        view_function(request)
+        return view_function(request)
     
     return callback
 
@@ -18,7 +19,7 @@ def main(args):
         app = App()
 
         for url_pattern in url_patterns:
-            app.router.add(url_pattern[0], url_pattern[1], to_view(url_pattern[2]))
+            app.router.add(url_pattern["method"], url_pattern["path"], to_wsgi_callback(url_pattern["callback"]))
 
         httpd = make_server("", 8000, app)
 
