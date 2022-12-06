@@ -10,5 +10,8 @@ def application(env, start_response):
     return [b"Hello World"]
 ```
 
+## Sample apps
+To be prepared...
+
 ## References
 [Webアプリケーションフレームワークの作り方 in Python](https://c-bata.link/webframework-in-python/)
