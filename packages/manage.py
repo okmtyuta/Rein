@@ -2,41 +2,19 @@ import argparse
 from wsgiref.simple_server import make_server
 
 from app import App
+from urls import url_patterns
 
 
 def main(args):
     if args.action == "runserver":
         app = App()
 
-        @app.route("^/$", "GET")
-        def hello(request, start_response):
-            start_response("200 OK", [("Content-type", "text/plain; charset=utf-8")])
-            return [b"Hello World"]
-
-        @app.route("^/user/$", "POST")
-        def create_user(request, start_response):
-            start_response(
-                "201 Created", [("Content-type", "text/plain; charset=utf-8")]
-            )
-            return [b"User Created"]
-
-        @app.route("^/user/(?P<name>\w+)/$", "GET")
-        def user_detail(request, start_response, name):
-            start_response("200 OK", [("Content-type", "text/plain; charset=utf-8")])
-            body = "Hello {name}".format(name=name)
-            return [body.encode("utf-8")]
-
-        @app.route("^/user/(?P<name>\w+)/follow/$", "POST")
-        def create_user(request, start_response, name):
-            start_response(
-                "201 Created", [("Content-type", "text/plain; charset=utf-8")]
-            )
-            body = "Followed {name}".format(name=name)
-            return [body.encode("utf-8")]
+        for url_pattern in url_patterns:
+            app.router.add(url_pattern[0], url_pattern[1], url_pattern[2])
 
         httpd = make_server("", 8000, app)
-        
-        print("Server started on http://localhost:8000")
+
+        print(f"Server started on http://localhost:{args.port}")
         httpd.serve_forever()
 
 
@@ -46,7 +24,8 @@ def main(args):
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="")
-    parser.add_argument("--action", help="")
+    parser.add_argument("--action", default="runserver", help="")
+    parser.add_argument("--port", default=8000, help="")
 
     args = parser.parse_args()
 

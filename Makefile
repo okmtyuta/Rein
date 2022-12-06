@@ -1,7 +1,7 @@
 runserver:
 	@echo "開発用サーバーを起動します"
-	@python3 packages/manage.py --action runserver
-
+	@python3 packages/manage.py
+	
 push:
 	@echo "gitへの自動pushを開始します"
 	git add .

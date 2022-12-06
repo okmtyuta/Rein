@@ -1,14 +1,12 @@
 # アプリ作成クラス
 
-from typing import Literal
 from router import Router
-
 
 class App:
     def __init__(self):
         self.router = Router()
 
-    def route(self, path=None, method: Literal["GET", "POST"] = "GET", callback=None):
+    def route(self, path=None, method = "GET", callback=None):
         def decorator(callback_func):
             self.router.add(method, path, callback_func)
             return callback_func
