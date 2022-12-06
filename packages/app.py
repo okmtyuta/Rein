@@ -1,5 +1,6 @@
 # アプリ作成クラス
 
+from request import Request
 from router import Router
 
 class App:
@@ -14,7 +15,6 @@ class App:
         return decorator(callback) if callback else decorator
 
     def __call__(self, env, start_response):
-        method = env["REQUEST_METHOD"].upper()
-        path = env["PATH_INFO"] or "/"
-        callback, kwargs = self.router.match(method, path)
-        return callback(env, start_response, **kwargs)
+        request = Request(env)
+        callback, kwargs = self.router.match(request.method, request.path)
+        return callback(request, start_response, **kwargs)
