@@ -6,20 +6,12 @@ from views import okmtyuta
 from urls import url_patterns
 
 
-def to_wsgi_callback(view_function):
-    def callback(request, start_response, **kwargs):
-        start_response("200 OK", [("Content-type", "text/plain; charset=utf-8")])
-        return view_function(request, **kwargs)
-    
-    return callback
-
-
 def main(args):
     if args.action == "runserver":
         app = App()
 
         for url_pattern in url_patterns:
-            app.router.add(url_pattern["method"], url_pattern["path"], to_wsgi_callback(url_pattern["callback"]))
+            app.router.add(url_pattern["method"], url_pattern["path"], url_pattern["callback"])
 
         httpd = make_server("", 8000, app)
 
