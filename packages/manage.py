@@ -2,7 +2,6 @@ import argparse
 from wsgiref.simple_server import make_server
 
 from app import App
-from views import okmtyuta
 from urls import url_patterns
 
 
