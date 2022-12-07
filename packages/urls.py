@@ -9,9 +9,8 @@ def url(method, path, callback):
 
 url_patterns = [
     url("GET", "^/$", views.index),
-    url("GET", "^/okmtyuta$", views.okmtyuta),
-    url("POST", "^/user$", views.hello),
-    url("GET", "^/user/(?P<name>\w+)$", views.user_detail),
-    url("GET", "^/json", views.json),
-    url("GET", "^/html", views.html),
+    url("POST", "^/post-json$", views.post_json),
+    url("GET", "^/get/(?P<name>\w+)$", views.get_param),
+    url("GET", "^/get-json", views.get_json),
+    url("GET", "^/return-html", views.return_html),
 ]

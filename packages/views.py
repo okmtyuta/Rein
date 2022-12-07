@@ -1,29 +1,25 @@
 # ここにはview関数を実装のこと
+import json
 
 from response import Response, JSONResponse, HTMLResponse
 
 
 def index(request):
-    return Response("THIS PAGE IS indeX")
+    return Response("Welcome To Rein, A Very Simple Python Web Framework")
 
 
-def json(request):
-    return JSONResponse({"name": "okmtyuta", "greet": "こんにちは"}, charset="utf-8")
+def get_json(request):
+    return JSONResponse({"key": "value"}, charset="utf-8")
 
 
-def okmtyuta(request):
-    return Response("Hello okmtyuta")
+def post_json(request):
+    return Response(f"You posted: {json.loads(request.body)}")
 
 
-def hello(request):
-    return Response("User is created")
-
-
-def user_detail(request, name):
-    print(name)
+def get_param(request, name):
     body = f"こんにちは {name}さん。ご用件をお伺いいたします。"
     return Response(body.encode("utf-8"))
 
 
-def html(request):
+def return_html(request):
     return HTMLResponse("test.html")
