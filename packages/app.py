@@ -8,6 +8,7 @@ class App:
     def __init__(self):
         self.router = Router()
 
+    # これは今は使っていない
     def route(self, path=None, method="GET", callback=None):
         def decorator(callback_func):
             self.router.add(method, path, callback_func)
