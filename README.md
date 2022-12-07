@@ -9,7 +9,7 @@
 ```python
 url_patterns = [
     ...,
-    url("GET", "/user", user)
+    url("GET", "^/user$", user)
 ]
 ```
 ここで，コールバック関数`user`は以下のような形式である必要があります。
